@@ -1,0 +1,67 @@
+//
+// CONFIGURACIÓN GENERAL DEL PROYECTO
+// 
+// Este archivo configura herramientas y plugins para todo el proyecto
+// Es como un setup.py en Python pero para Android
+//
+
+// Configuración de plugins (herramientas de compilación)
+buildscript {
+    repositories {
+        // Repositorios donde descargar herramientas
+        google()        // Repositorio oficial de Google
+        mavenCentral()  // Repositorio central de Java
+    }
+    
+    dependencies {
+        // Herramienta principal para compilar apps Android
+        // Versión probada y estable (no la más nueva)
+        classpath 'com.android.tools.build:gradle:7.4.2'
+        
+        // NOTA: Las versiones más nuevas pueden dar problemas
+        // Esta versión está probada con el proyecto original
+    }
+}
+
+// Configuración para todos los módulos del proyecto
+allprojects {
+    repositories {
+        // Los mismos repositorios para descargar librerías
+        google()        // Para librerías de Android
+        mavenCentral()  // Para librerías generales de Java
+        
+        // NOTA: También existe jcenter() pero está deprecado
+        // Solo usamos google() y mavenCentral() que son oficiales
+    }
+}
+
+// Tarea para limpiar archivos de compilación
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+//
+// EXPLICACIÓN SIMPLE:
+//
+// buildscript {}: Configuración de herramientas para compilar
+// ├── repositories: De dónde descargar herramientas
+// └── dependencies: Qué herramientas usar
+//
+// allprojects {}: Configuración para todo el proyecto
+// ├── repositories: De dónde descargar librerías
+//
+// task clean: Comando para limpiar archivos temporales
+// (como rm -rf __pycache__ en Python)
+//
+// VERSIONES EXPLICADAS:
+//
+// com.android.tools.build:gradle:7.4.2
+// ├── com.android.tools.build = herramienta oficial de Google
+// ├── gradle = sistema de compilación
+// └── 7.4.2 = versión específica (probada, no experimental)
+//
+// ¿POR QUÉ ESTA VERSIÓN?
+// - Compatible con proyecto original que funciona
+// - Estable y sin bugs conocidos
+// - No requiere versiones muy nuevas de Android Studio
+//

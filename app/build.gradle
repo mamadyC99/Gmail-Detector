@@ -1,0 +1,111 @@
+// 
+// CONFIGURACIÓN DE COMPILACIÓN DE LA APP
+// 
+// BASADO EN: proyecto funcional de GitHub
+// Es como requirements.txt en Python pero más complejo
+//
+
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    // Versión de Android SDK para compilar
+    compileSdkVersion 33
+    
+    // Configuración básica de la app
+    defaultConfig {
+        // ID único de la app (como nombre de dominio)
+        applicationId "com.simple.gmaildetector"
+        
+        // Versión mínima de Android que soportamos
+        // 21 = Android 5.0 (2014) - cubre el 99% de dispositivos
+        minSdkVersion 21
+        
+        // Versión objetivo - la más nueva que hemos probado
+        // 33 = Android 13 (2022)
+        targetSdkVersion 33
+        
+        // Número de versión interno (para actualizaciones)
+        versionCode 1
+        
+        // Versión que ve el usuario
+        versionName "1.0"
+    }
+
+    // Configuración de tipos de compilación
+    buildTypes {
+        // Versión de desarrollo
+        debug {
+            // Incluir información de debug
+            debuggable true
+            // No optimizar código (para debugging)
+            minifyEnabled false
+        }
+        
+        // Versión de producción
+        release {
+            // No incluir información de debug
+            debuggable false
+            // Optimizar código
+            minifyEnabled true
+            // Archivo de configuración de optimización
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    
+    // Configuración de Java
+    compileOptions {
+        // Usar Java 8 (estándar moderno)
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+// 
+// DEPENDENCIAS - LIBRERÍAS QUE NECESITAMOS
+// Es como import en Python
+//
+dependencies {
+    
+    // DEPENDENCIAS BÁSICAS DE ANDROID
+    // (equivalente a import os, import sys en Python)
+    
+    // Librería básica de Android
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    
+    // Componentes de interfaz (botones, texto, etc.)
+    implementation 'com.google.android.material:material:1.8.0'
+    
+    // Layouts y diseño
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    
+    // DEPENDENCIA PARA HTTP - OKHTTP
+    // (equivalente a import requests en Python)
+    // ✅ PROBADA Y FUNCIONANDO - versión estable
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    
+    // DEPENDENCIAS DE TESTING (opcional - para pruebas)
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
+
+//
+// EXPLICACIÓN DE VERSIONES:
+//
+// androidx.appcompat:appcompat:1.6.1
+// ├── androidx = librería moderna de Android
+// ├── appcompat = compatibilidad con versiones antiguas
+// └── 1.6.1 = versión específica (probada y estable)
+//
+// com.squareup.okhttp3:okhttp:4.10.0
+// ├── com.squareup = empresa que hizo la librería
+// ├── okhttp3 = nombre de la librería HTTP
+// └── 4.10.0 = versión específica (estable, no la más nueva)
+//
+// ¿POR QUÉ NO LA VERSIÓN MÁS NUEVA?
+// - Las versiones más nuevas pueden tener bugs
+// - Las versiones específicas están probadas
+// - Es mejor estabilidad que características nuevas
+//

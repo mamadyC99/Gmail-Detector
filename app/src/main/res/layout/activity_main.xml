@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ESTE ARCHIVO DEFINE CÓMO SE VE LA PANTALLA
+
+¿QUÉ CONTIENE?
+1. Un título "Gmail Detector"
+2. Un área de texto grande para mostrar el estado
+3. Un botón para configurar permisos
+4. Diseño simple y claro
+
+Es como HTML pero para Android
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="#F5F5F5">
+    <!-- 
+    LinearLayout = elementos uno debajo del otro (vertical)
+    match_parent = usar todo el espacio disponible
+    padding = espacio interno de 20dp (como margin en CSS)
+    background = color de fondo gris claro
+    -->
+
+    <!-- 
+    TÍTULO DE LA APP
+    -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="📧 Gmail Detector"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:gravity="center"
+        android:layout_marginBottom="30dp"
+        android:background="#FFFFFF"
+        android:padding="16dp"
+        android:elevation="4dp" />
+    <!-- 
+    TextView = elemento para mostrar texto
+    wrap_content = altura ajustada al contenido
+    textSize="28sp" = tamaño de letra grande
+    textStyle="bold" = texto en negrita
+    gravity="center" = centrar el texto
+    layout_marginBottom = espacio debajo del elemento
+    elevation = sombra (efecto 3D)
+    -->
+
+    <!-- 
+    ÁREA DE ESTADO PRINCIPAL
+    Aquí se muestra si está funcionando o no
+    -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="20dp">
+        <!-- 
+        ScrollView = permite hacer scroll si el texto es muy largo
+        layout_weight="1" = usar todo el espacio disponible
+        -->
+
+        <TextView
+            android:id="@+id/texto_estado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🔄 Verificando estado..."
+            android:textSize="16sp"
+            android:lineSpacingExtra="4dp"
+            android:padding="20dp"
+            android:background="#FFFFFF"
+            android:textColor="#333333"
+            android:fontFamily="monospace"
+            android:elevation="2dp" />
+        <!-- 
+        android:id="@+id/texto_estado" = ID para encontrarlo desde Java
+        lineSpacingExtra = espacio extra entre líneas
+        fontFamily="monospace" = letra de código (más fácil de leer)
+        -->
+
+    </ScrollView>
+
+    <!-- 
+    BOTÓN DE CONFIGURACIÓN
+    -->
+    <Button
+        android:id="@+id/boton_configurar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="🔧 Configurar Permisos"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:background="#2196F3"
+        android:textColor="#FFFFFF"
+        android:elevation="4dp"
+        android:layout_marginBottom="16dp" />
+    <!-- 
+    android:id="@+id/boton_configurar" = ID para encontrarlo desde Java
+    background="#2196F3" = color azul
+    textColor="#FFFFFF" = texto blanco
+    -->
+
+    <!-- 
+    TEXTO DE AYUDA
+    -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="💡 Tip: Usa 'adb logcat | grep GmailDetector' para ver logs en tiempo real"
+        android:textSize="12sp"
+        android:textColor="#666666"
+        android:gravity="center"
+        android:background="#E3F2FD"
+        android:padding="12dp"
+        android:layout_marginTop="8dp" />
+    <!-- 
+    textColor="#666666" = gris oscuro
+    background="#E3F2FD" = azul muy claro
+    -->
+
+</LinearLayout>

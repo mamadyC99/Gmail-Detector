@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+ESTE ARCHIVO LE DICE A ANDROID CÓMO FUNCIONA NUESTRA APP
+
+BASADO EN: 
+- https://github.com/Chagall/notification-listener-service-example
+- Documentación oficial de Android
+
+¿QUÉ HACE?
+1. Declara permisos que necesitamos (internet, notificaciones)
+2. Registra nuestra pantalla principal (MainActivity)
+3. Registra nuestro servicio de notificaciones (NotificationListener)
+4. Configura metadatos para el servicio
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.simple.gmaildetector">
+
+    <!-- 
+    PERMISOS QUE NECESITA LA APP
+    Son como "pedir permiso" antes de hacer algo
+    -->
+    
+    <!-- Permiso para conectar a internet (enviar datos al servidor) -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    
+    <!-- Permiso para saber si hay conexión de red -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- 
+    CONFIGURACIÓN DE LA APLICACIÓN
+    -->
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Gmail Detector"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <!-- 
+        usesCleartextTraffic="true" permite HTTP (no solo HTTPS)
+        Necesario para enviar datos a servidores locales como 192.168.1.100:8000
+        -->
+
+        <!-- 
+        PANTALLA PRINCIPAL DE LA APP
+        Es lo que ve el usuario cuando abre la app
+        -->
+        <activity
+            android:name=".MainActivity"
+            android:label="Gmail Detector"
+            android:exported="true">
+            <!-- 
+            exported="true" significa que otras apps pueden abrir esta pantalla
+            Es necesario para que Android pueda iniciar la app
+            -->
+            
+            <!-- 
+            INTENT FILTER: Le dice a Android que esta es la pantalla principal
+            -->
+            <intent-filter>
+                <!-- Acción principal: abrir la app -->
+                <action android:name="android.intent.action.MAIN" />
+                
+                <!-- Categoría: aparecer en el launcher (lista de apps) -->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 
+        SERVICIO DE NOTIFICACIONES - EL CORAZÓN DE LA APP
+        Este es el código que escucha notificaciones 24/7
+        -->
+        <service
+            android:name=".NotificationListener"
+            android:label="Gmail Detector Service"
+            android:exported="false"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <!-- 
+            android:name=".NotificationListener" = usar nuestra clase NotificationListener
+            android:exported="false" = solo nuestro sistema puede usar este servicio
+            android:permission = permiso especial requerido por Android
+            -->
+            
+            <!-- 
+            INTENT FILTER: Le dice a Android qué tipo de servicio es
+            -->
+            <intent-filter>
+                <!-- 
+                Esta acción es OBLIGATORIA para NotificationListenerService
+                Es como una "firma" que Android reconoce
+                -->
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+            
+            <!-- 
+            METADATOS: Configuración avanzada del servicio
+            -->
+            
+            <!-- 
+            TIPOS DE NOTIFICACIONES QUE QUEREMOS ESCUCHAR
+            conversations = conversaciones (emails, mensajes)
+            alerting = alertas importantes
+            -->
+            <meta-data
+                android:name="android.service.notification.default_filter_types"
+                android:value="conversations|alerting" />
+            
+            <!-- 
+            TIPOS DE NOTIFICACIONES QUE QUEREMOS IGNORAR
+            ongoing = notificaciones persistentes (como música reproduciéndose)
+            silent = notificaciones silenciosas
+            -->
+            <meta-data
+                android:name="android.service.notification.disabled_filter_types"
+                android:value="ongoing|silent" />
+        </service>
+
+    </application>
+
+</manifest>

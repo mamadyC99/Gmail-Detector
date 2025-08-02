@@ -1,0 +1,47 @@
+//
+// CONFIGURACIÓN DE MÓDULOS DEL PROYECTO
+//
+// Este archivo le dice a Gradle qué partes tiene el proyecto
+// Es muy simple - solo define el nombre y módulos
+//
+
+// Nombre del proyecto (aparece en Android Studio)
+rootProject.name = "Gmail Detector"
+
+// Módulos incluidos en el proyecto
+// ':app' significa que hay una carpeta 'app' con código
+include ':app'
+
+//
+// EXPLICACIÓN SIMPLE:
+//
+// rootProject.name = "Gmail Detector"
+// └── Nombre que aparece en Android Studio
+//
+// include ':app'
+// └── Incluir el módulo 'app' (nuestra aplicación principal)
+//
+// ¿QUÉ ES UN MÓDULO?
+// - Un módulo es una parte del proyecto
+// - ':app' es el módulo principal (nuestra aplicación)
+// - Podrían existir otros módulos como ':library' o ':tests'
+// - Pero para proyectos simples, solo necesitamos ':app'
+//
+// ESTRUCTURA QUE ESTO CREA:
+// GmailDetector/               ← Proyecto raíz
+// ├── settings.gradle          ← Este archivo
+// ├── build.gradle             ← Configuración general
+// └── app/                     ← Módulo principal
+//     ├── build.gradle         ← Configuración del módulo
+//     └── src/                 ← Código fuente
+//         └── main/
+//             ├── java/        ← Código Java
+//             ├── res/         ← Recursos (layouts, imágenes)
+//             └── AndroidManifest.xml ← Configuración Android
+//
+// COMPARACIÓN CON PYTHON:
+// - Es como tener un proyecto con setup.py
+// - settings.gradle = defines what packages to include
+// - build.gradle = defines dependencies (like requirements.txt)
+// - app/ = main package with source code
+//
