@@ -1,0 +1,79 @@
+# COMPILADOR AUTOMÁTICO DE GMAIL DETECTOR
+# 
+# Este código compila tu app Android automáticamente
+# y te permite descargar la APK lista para instalar
+
+name: Build Gmail Detector APK
+
+# Cuándo ejecutar: cada vez que hagas push
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    # Usar máquina virtual Ubuntu (gratis en GitHub)
+    runs-on: ubuntu-latest
+
+    steps:
+    # PASO 1: Descargar tu código del repositorio
+    - name: 📥 Checkout code
+      uses: actions/checkout@v3
+
+    # PASO 2: Instalar Java 11 (requerido para Android)
+    - name: ☕ Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+
+    # PASO 3: Crear script gradlew (Android necesita esto)
+    - name: 🔧 Create gradlew wrapper
+      run: |
+        echo '#!/bin/sh' > gradlew
+        echo 'exec gradle "$@"' >> gradlew
+        chmod +x gradlew
+
+    # PASO 4: Instalar Gradle (herramienta de compilación)
+    - name: 📦 Setup Gradle
+      uses: gradle/gradle-build-action@v2
+
+    # PASO 5: Compilar la APK de debug
+    - name: 🔨 Build Debug APK
+      run: |
+        echo "🚀 Empezando compilación..."
+        ./gradlew assembleDebug --stacktrace
+        echo "✅ Compilación completada"
+
+    # PASO 6: Verificar que la APK se creó
+    - name: 🔍 Verify APK exists
+      run: |
+        if [ -f "app/build/outputs/apk/debug/app-debug.apk" ]; then
+          echo "✅ APK encontrada: $(ls -lh app/build/outputs/apk/debug/app-debug.apk)"
+        else
+          echo "❌ APK no encontrada"
+          find . -name "*.apk" -type f
+          exit 1
+        fi
+
+    # PASO 7: Subir APK para descarga
+    - name: 📤 Upload Gmail Detector APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: gmail-detector-apk
+        path: app/build/outputs/apk/debug/app-debug.apk
+        retention-days: 30
+
+    # PASO 8: Mostrar información de la APK
+    - name: 📊 APK Info
+      run: |
+        echo "🎉 APK de Gmail Detector lista para descargar!"
+        echo "📁 Nombre: gmail-detector-apk"
+        echo "📱 Para instalar:"
+        echo "   1. Descargar APK de artifacts"
+        echo "   2. Transferir a móvil"
+        echo "   3. Activar 'Instalar apps desconocidas'"
+        echo "   4. Instalar APK"
+        echo "   5. Configurar permisos de notificación"
