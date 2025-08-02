@@ -14,7 +14,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Set up JDK 11
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         java-version: '11'
         distribution: 'temurin'
@@ -26,7 +26,7 @@ jobs:
       run: yes | sdkmanager --licenses
 
     - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
+      uses: gradle/actions/setup-gradle@v3
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
@@ -35,7 +35,7 @@ jobs:
       run: ./gradlew assembleDebug
 
     - name: Upload APK
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: gmail-detector-apk
         path: app/build/outputs/apk/debug/app-debug.apk
